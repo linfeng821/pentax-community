@@ -8,7 +8,7 @@ public interface CommunityConstant {
     int ACTIVATION_SUCCESS = 0;
 
     /**
-     * 重复激活
+     * 重复激活KaptchaConfig
      */
     int ACTIVATION_REPEAT = 1;
 
