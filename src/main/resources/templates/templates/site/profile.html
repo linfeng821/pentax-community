@@ -1,17 +1,17 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<link rel="icon" href="https://static.nowcoder.com/images/logo_87_87.png"/>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous">
-	<link rel="stylesheet" th:href="@{/css/global.css}" />
-	<title>牛客网-操作结果</title>
+	<link rel="stylesheet" href="../css/global.css" />
+	<title>牛客网-个人主页</title>
 </head>
-<body class="bg-white">
+<body>
 	<div class="nk-container">
 		<!-- 头部 -->
-		<header class="bg-dark sticky-top" th:replace="index::header">
+		<header class="bg-dark sticky-top">
 			<div class="container">
 				<!-- 导航 -->
 				<nav class="navbar navbar-expand-lg navbar-dark">
@@ -60,14 +60,38 @@
 
 		<!-- 内容 -->
 		<div class="main">
-			<div class="container mt-5">
-				<div class="jumbotron">
-					<p class="lead" th:text="${msg}">您的账号已经激活成功,可以正常使用了!</p>
-					<hr class="my-4">
-					<p>
-						系统会在 <span id="seconds" class="text-danger">8</span> 秒后自动跳转,
-						您也可以点此 <a id="target" th:href="@{${target}}" class="text-primary">链接</a>, 手动跳转!
-					</p>
+			<div class="container">
+				<!-- 选项 -->
+				<div class="position-relative">
+					<ul class="nav nav-tabs">
+						<li class="nav-item">
+							<a class="nav-link active" href="profile.html">个人信息</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="my-post.html">我的帖子</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="my-reply.html">我的回复</a>
+						</li>
+					</ul>
+				</div>
+				<!-- 个人信息 -->
+				<div class="media mt-5">
+					<img src="http://images.nowcoder.com/head/1t.png" class="align-self-start mr-4 rounded-circle" alt="用户头像" style="width:50px;">
+					<div class="media-body">
+						<h5 class="mt-0 text-warning">
+							<span>nowcoder</span>
+							<button type="button" class="btn btn-info btn-sm float-right mr-5 follow-btn">关注TA</button>
+						</h5>
+						<div class="text-muted mt-3">
+							<span>注册于 <i class="text-muted">2015-06-12 15:20:12</i></span>
+						</div>
+						<div class="text-muted mt-3 mb-5">
+							<span>关注了 <a class="text-primary" href="followee.html">5</a> 人</span>
+							<span class="ml-4">关注者 <a class="text-primary" href="follower.html">123</a> 人</span>
+							<span class="ml-4">获得了 <i class="text-danger">87</i> 个赞</span>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -138,17 +162,7 @@
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
-	<script>
-
-		$(function(){
-			setInterval(function(){
-				var seconds = $("#seconds").text();
-				$("#seconds").text(--seconds);
-				if(seconds == 0) {
-					location.href = $("#target").attr("href");
-				}
-			}, 1000);
-		});
-	</script>
+	<script src="../js/global.js"></script>
+	<script src="../js/profile.js"></script>
 </body>
 </html>
