@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
@@ -49,6 +50,9 @@ public class UserController {
     public String getSettingPage() {
         return "/site/setting";
     }
+
+
+
     @LoginRequired
     @RequestMapping(path = "/upload", method = RequestMethod.POST)
     public String uploadHeader(MultipartFile headerImage, Model model) {
@@ -105,6 +109,31 @@ public class UserController {
         } catch (IOException e) {
             logger.error("读取头像失败: " + e.getMessage());
         }
+    }
+    @LoginRequired
+    @RequestMapping(path="/updatePassword",method = RequestMethod.POST)
+    public String updatePassword(@RequestParam("oldPwd")String oldPwd,@RequestParam("newPwd")
+                                 String newPwd,@RequestParam("confirmPwd")String confirmPwd,
+                                 Model model){
+        User user = hostHolder.getUser();
+        if(StringUtils.isBlank(oldPwd)){
+            model.addAttribute("pwd","请输入原密码");
+            return "/site/setting";
+        }
+        if(!newPwd.equals(confirmPwd)){
+            model.addAttribute("pwd","两次密码输入不一致");
+            return "/site/setting";
+        }
+        if(oldPwd.equals(newPwd)){
+            model.addAttribute("pwd","新密码不能和原密码相同");
+            return "/site/setting";
+        }
+        if(!CommunityUtil.md5(oldPwd + user.getSalt()).equals(user.getPassword())){
+            model.addAttribute("pwd","输入密码错误");
+            return "/site/setting";
+        }
+        userService.updatePassword(user.getId(),CommunityUtil.md5(newPwd+user.getSalt()));
+        return "redirect:/index";
     }
 
 }
